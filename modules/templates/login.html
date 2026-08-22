@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#08080d">
+
+    <title>ShadowDox — Connexion</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="login-page">
+
+<main class="login-card">
+
+    <div class="logo">SHADOW<span>DOX</span></div>
+
+    <p class="subtitle">Private research tool</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <label for="password">Mot de passe</label>
+
+        <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Mot de passe"
+            autocomplete="current-password"
+            required
+        >
+
+        <button class="primary-button" type="submit">
+            Ouvrir ShadowDox
+        </button>
+
+    </form>
+
+</main>
+
+</body>
+</html>
