@@ -16,7 +16,11 @@ from modules.search_engine import ShadowDoxEngine
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder="modules/templates/templates",
+    static_folder="modules/templates/templates/static",
+)
 
 app.config["SECRET_KEY"] = os.getenv(
     "SECRET_KEY",
