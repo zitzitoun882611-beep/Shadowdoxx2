@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta name="theme-color" content="#08080d">
+
+    <title>ShadowDox</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div>
+        <div class="logo small">
+            SHADOW<span>DOX</span>
+        </div>
+
+        <div class="status">
+            ● PRIVATE
+        </div>
+    </div>
+
+    <a class="logout" href="{{ url_for('logout') }}">
+        Déconnexion
+    </a>
+
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+
+        <h1>Recherche publique</h1>
+
+        <p>
+            Recherche des informations accessibles publiquement.
+        </p>
+
+    </section>
+
+
+    <section class="search-box">
+
+        <form method="POST">
+
+            <input
+                name="query"
+                type="search"
+                placeholder="Nom, pseudo, email..."
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit" class="primary-button">
+                🔎 Rechercher
+            </button>
+
+        </form>
+
+    </section>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="alert {{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+    {% if results %}
+
+        <section class="results">
+
+            <div class="result-header">
+
+                <div>
+                    <span class="label">RECHERCHE</span>
+                    <h2>{{ results.query }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="section-title">
+                🌐 Recherche Web
+            </div>
+
+
+            {% for item in results.web %}
+
+                <a
+                    class="result-card"
+                    href="{{ item.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <div class="result-icon">
+                        🌐
+                    </div>
+
+                    <div>
+                        <strong>{{ item.name }}</strong>
+                        <span>Ouvrir la recherche</span>
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </a>
+
+            {% endfor %}
+
+
+            <div class="section-title">
+                👤 Profils publics
+            </div>
+
+
+            {% for item in results.social %}
+
+                <a
+                    class="result-card"
+                    href="{{ item.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <div class="result-icon">
+                        👤
+                    </div>
+
+                    <div>
+                        <strong>{{ item.name }}</strong>
+                        <span>Recherche publique</span>
+                    </div>
+
+                    <div class="arrow">
+                        →
+                    </div>
+
+                </a>
+
+            {% endfor %}
+
+        </section>
+
+    {% else %}
+
+        <section class="empty">
+
+            <div class="empty-icon">
+                🔍
+            </div>
+
+            <h2>Prêt à rechercher</h2>
+
+            <p>
+                Entre un nom, un pseudo ou une adresse e-mail.
+            </p>
+
+        </section>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>
